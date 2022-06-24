@@ -25,12 +25,12 @@
 
 <section class="container-fluid position-relative">
     <div class="row">
-        <div class="col-12 mapas">
+        <div class="col-12">
             <div class="dropdown bg-light">
                 <b class="h5 font-weight-bolder">Regiones:</b>
                 <a class="btn btn-light ml-3 font-weight-bolder dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
                     Seleccionar
-                 </a>
+                </a>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item" href="#">Península</a>
@@ -39,26 +39,13 @@
                     <a class="dropdown-item" href="#">Noreste</a>
                 </div>
             </div>
+        </div>
 
+        <div class="col-12" id="mapas">
             <img id="terreno" class="img-fluid position-absolute" src="aSeriesTerrenoPeninsula.png" />
-            <img id="1985" data-year="1985" class="img-fluid position-absolute layer layer-off" src="IAN/Peninsula/IANSeries1985Peninsula.png" />
-            <img id="1993" data-year="1993" class="img-fluid position-absolute layer layer-off" src="IAN/Peninsula/IANSeries1993Peninsula.png" />
-            <img id="2002" data-year="2002" class="img-fluid position-absolute layer layer-off" src="IAN/Peninsula/IANSeries2002Peninsula.png" />
-            <img id="2007" data-year="2007" class="img-fluid position-absolute layer layer-off" src="IAN/Peninsula/IANSeries2007Peninsula.png" />
-            <img id="2011" data-year="2011" class="img-fluid position-absolute layer layer-off" src="IAN/Peninsula/IANSeries2011Peninsula.png" />
-            <img id="2014" data-year="2014" class="img-fluid position-absolute layer layer-off" src="IAN/Peninsula/IANSeries2014Peninsula.png" />
-            <img id="2020" data-year="2020" class="img-fluid position-absolute layer layer-off" src="IAN/Peninsula/IANSeries2020Peninsula.png" />
+        </div>
 
-        </div>
-        <div class="col-10 botones-mapas">
-            <button type="button" data-year="1985" class="btn btn-info btn-sm">1985</button>
-            <button type="button" data-year="1993" class="btn btn-info btn-sm">1993</button>
-            <button type="button" data-year="2002" class="btn btn-info btn-sm">2002</button>
-            <button type="button" data-year="2007" class="btn btn-info btn-sm">2007</button>
-            <button type="button" data-year="2011" class="btn btn-info btn-sm">2011</button>
-            <button type="button" data-year="2014" class="btn btn-info btn-sm">2014</button>
-            <button type="button" data-year="2020" class="btn btn-info btn-sm">2020</button>
-        </div>
+        <div class="col-10" id="botones-mapas"></div>
         <div class="col-2">
             <button id="play" type="button" class="btn btn-info btn-sm">Play</button>
             <button id="stop" type="button" class="btn btn-info btn-sm">Stop</button>
@@ -72,34 +59,40 @@
 </footer>
 <script>
 		$(document).ready(function(){
-				var play = true;
-				var mapa = 0;
+            var anios = [1985, 1993, 2002, 2007, 2011, 2014, 2020];
+            var play = true;
+            var mapa = 0;
 
-				var activaMapa = function (mapaId) {
-						year = $(mapaId).data('year');
-						$('.mapas img.layer').removeClass('layer-on');
-						$('#'+year).addClass('layer-on');
-				}
+            anios.forEach(function(e){
+                $('#botones-mapas').append("<button type='button' data-year='" + e + "' class='btn btn-info btn-sm'>" + e + "</button>");
+                $('#mapas').append("<img id='" + e + "' data-year='" + e + "' class='img-fluid position-absolute layer layer-off' src='IAN/Peninsula/IANSeries" + e + "Peninsula.png' />")
+            });
 
-				setInterval(function () {
-						if(play){
-								activaMapa($('.mapas img.layer')[mapa]);
-								mapa = mapa == 7 ? 0 : mapa+1;
-						}
-				}, 3000);
+            var activaMapa = function (mapaId) {
+                year = $(mapaId).data('year');
+                $('#mapas img.layer').removeClass('layer-on');
+                $('#'+year).addClass('layer-on');
+            }
 
-				$('.botones-mapas').on('click','button',function(){
-						activaMapa(this);
-				});
+            setInterval(function () {
+                if(play){
+                    activaMapa($('#mapas img.layer')[mapa]);
+                    mapa = mapa == 7 ? 0 : mapa+1;
+                }
+            }, 3000);
 
-				$('#play').click(function () {
-						play = true;
-				});
+            $('#botones-mapas').on('click','button',function(){
+                activaMapa(this);
+            });
 
-				$('#stop').click(function () {
-						play = false;
-				});
-		});
+            $('#play').click(function () {
+                play = true;
+            });
+
+            $('#stop').click(function () {
+                play = false;
+            });
+        });
 </script>
 </body>
 </html>

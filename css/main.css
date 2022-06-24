@@ -1,10 +1,10 @@
-.mapas img{
+#mapas img{
     transition: all 500ms ease-in;
 }
-.mapas img.layer-off, .layer{
+#mapas img.layer-off, .layer{
     opacity: 0;
 }
-.mapas img.layer-on{
+#mapas img.layer-on{
     opacity: .7;
 }
 #terreno{
