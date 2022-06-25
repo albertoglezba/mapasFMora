@@ -27,22 +27,22 @@
     <div class="row">
         <div class="col-12">
             <div class="dropdown bg-light">
-                <b class="h5 font-weight-bolder">Regiones:</b>
+                <b class="h5 font-weight-bolder">Región:</b>
                 <a class="btn btn-light ml-3 font-weight-bolder dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
                     Seleccionar
                 </a>
 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="#">Península</a>
-                    <a class="dropdown-item" href="#">Centro</a>
-                    <a class="dropdown-item" href="#">Noroeste</a>
-                    <a class="dropdown-item" href="#">Noreste</a>
+                    <a class="dropdown-item" href="?region=Peninsula">Península</a>
+                    <a class="dropdown-item" href="?region=Centro">Centro</a>
+                    <a class="dropdown-item" href="?region=NW">Noroeste</a>
+                    <a class="dropdown-item" href="?region=NE">Noreste</a>
                 </div>
             </div>
         </div>
 
         <div class="col-12" id="mapas">
-            <img id="terreno" class="img-fluid position-absolute" src="aSeriesTerrenoPeninsula.png" />
+            <img id="terreno" class="img-fluid position-absolute" src="" />
         </div>
 
         <div class="col-10" id="botones-mapas"></div>
@@ -59,13 +59,19 @@
 </footer>
 <script>
 		$(document).ready(function(){
-            var anios = [1985, 1993, 2002, 2007, 2011, 2014, 2020];
-            var play = true;
-            var mapa = 0;
+            const anios = [1985, 1993, 2002, 2007, 2011, 2014, 2020];
+            let play = true;
+            let mapa = 0;
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const region = urlParams.get('region')
+
+            document.getElementById("terreno").src="aSeriesTerreno" + region + ".png";
+            document.getElementById('dropdownMenuLink').innerText = region;
 
             anios.forEach(function(e){
                 $('#botones-mapas').append("<button type='button' data-year='" + e + "' class='btn btn-info btn-sm'>" + e + "</button>");
-                $('#mapas').append("<img id='" + e + "' data-year='" + e + "' class='img-fluid position-absolute layer layer-off' src='IAN/Peninsula/IANSeries" + e + "Peninsula.png' />")
+                $('#mapas').append("<img id='" + e + "' data-year='" + e + "' class='img-fluid position-absolute layer layer-off' src='IAN/" + region + "/IANSeries" + e + region + ".png' />")
             });
 
             var activaMapa = function (mapaId) {

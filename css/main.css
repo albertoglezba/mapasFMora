@@ -1,12 +1,12 @@
 #mapas img{
-    transition: all 500ms ease-in;
+    transition: all 1000ms ease-in;
 }
 #mapas img.layer-off, .layer{
     opacity: 0;
 }
 #mapas img.layer-on{
-    opacity: .7;
+    opacity: .9;
 }
 #terreno{
-    opacity: .9;
+    opacity: 1;
 }
